@@ -8,8 +8,8 @@ numpy.random.seed(42)
 ### The words (features) and authors (labels), already largely processed.
 ### These files should have been created from the previous (Lesson 10)
 ### mini-project.
-words_file = "../text_learning/your_word_data.pkl" 
-authors_file = "../text_learning/your_email_authors.pkl"
+words_file = "../mechine_learning_ex/text_learning/your_word_data.pkl"
+authors_file = "../mechine_learning_ex/text_learning/your_email_authors.pkl"
 word_data = pickle.load( open(words_file, "r"))
 authors = pickle.load( open(authors_file, "r") )
 
@@ -39,5 +39,28 @@ labels_train   = labels_train[:150]
 
 ### your code goes here
 
+print(len(features_train))
+
+from sklearn.tree import DecisionTreeClassifier
+clf= DecisionTreeClassifier()
+clf.fit(features_train,labels_train)
+print(clf.score(features_test,labels_test))
 
 
+
+### What’s the importance of the most important feature? What is the number of this feature?
+
+featurelist =[]
+importance = list(clf.feature_importances_)
+for num, i in enumerate(importance):
+    if i >0.2:
+        print("the number of this feature is {}, the importance is {}.".format(num,i))
+
+### pull out the word that’s causing most of the discrimination of the decision tree. What is it?
+features_train, features_test, labels_train, labels_test = cross_validation.train_test_split(word_data, authors, test_size=0.1, random_state=42)
+
+from sklearn.feature_extraction.text import TfidfVectorizer
+vectorizer = TfidfVectorizer(sublinear_tf=True, max_df=0.5,
+stop_words='english')
+features_train = vectorizer.fit_transform(features_train)
+print(vectorizer.get_feature_names()[33614])
