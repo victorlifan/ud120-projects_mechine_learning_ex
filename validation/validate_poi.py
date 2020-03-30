@@ -27,6 +27,18 @@ labels, features = targetFeatureSplit(data)
 
 
 
-### it's all yours from here forward!  
+### it's all yours from here forward!
+### decision Tree
+from sklearn.tree import DecisionTreeClassifier
+clf= DecisionTreeClassifier()
+clf.fit(features,labels)
+print("the overfitting dataset score is:",clf.score(features,labels))
+
+### train_test_split
+from sklearn.model_selection import train_test_split
+x_train,x_test,y_train,y_test=train_test_split(features,labels,test_size= .3, random_state= 42)
 
 
+### re-train and re-fit data to get new score
+clf.fit(x_train,y_train)
+print("new score after sliting is:", clf.score(x_test,y_test))

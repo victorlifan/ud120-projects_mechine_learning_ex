@@ -26,6 +26,13 @@ labels, features = targetFeatureSplit(data)
 
 
 
-### your code goes here 
+### your code goes here
+### train_test_split
+from sklearn.model_selection import train_test_split
+x_train,x_test,y_train,y_test=train_test_split(features,labels, test_size =.3,random_state =42)
 
-
+### decision Tree
+from sklearn.tree import DecisionTreeClassifier
+clf= DecisionTreeClassifier()
+clf.fit(x_train,y_train)
+print("new score after sliting is:", clf.score(x_test,y_test))
